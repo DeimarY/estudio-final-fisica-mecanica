@@ -1,0 +1,819 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>Guía de Física</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/contrib/auto-render.min.js"></script>
+    <style>
+      :root {
+        --bg: #fff;
+        --soft: #f5f5f7;
+        --tx: #1d1d1f;
+        --mut: #6e6e73;
+        --ac: #0071e3;
+        --ok: #1d8f3f;
+        --bad: #c9342b;
+        --line: rgba(0, 0, 0, 0.1);
+        --nav: rgba(255, 255, 255, 0.75);
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #000;
+          --soft: #1c1c1e;
+          --tx: #f5f5f7;
+          --mut: #a1a1a6;
+          --ac: #2997ff;
+          --ok: #32d74b;
+          --bad: #ff6961;
+          --line: rgba(255, 255, 255, 0.14);
+          --nav: rgba(0, 0, 0, 0.7);
+        }
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 80px;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--tx);
+        font:
+          100%/1.6 system-ui,
+          -apple-system,
+          "Segoe UI",
+          sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+      .hero {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 4.5rem 1.4rem 2rem;
+      }
+      h1 {
+        font-size: clamp(2.6rem, 8vw, 4.6rem);
+        line-height: 1.03;
+        letter-spacing: -0.035em;
+        margin: 0 0 0.8rem;
+        font-weight: 700;
+      }
+      .hero p {
+        color: var(--mut);
+        font-size: 1.25rem;
+        line-height: 1.4;
+        max-width: 30em;
+        margin: 0 0 1.6rem;
+      }
+      .hero p span {
+        color: #6e6e736c;
+        font-weight: 100;
+        font-size: 1rem;
+      }
+      .prog {
+        display: flex;
+        align-items: center;
+        gap: 0.9rem;
+        color: var(--mut);
+        font-size: 0.9rem;
+        max-width: 420px;
+      }
+      .bar {
+        flex: 1;
+        height: 5px;
+        border-radius: 9px;
+        background: var(--line);
+        overflow: hidden;
+      }
+      .bar i {
+        display: block;
+        height: 100%;
+        width: 0;
+        background: var(--ac);
+        transition: width 0.45s cubic-bezier(0.3, 1.2, 0.5, 1);
+      }
+      .wrap {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 0 1.4rem 5rem;
+      }
+      nav {
+        position: sticky;
+        top: 0;
+        z-index: 5;
+        display: flex;
+        gap: 0.4rem;
+        overflow-x: auto;
+        padding: 0.7rem 1.4rem;
+        margin: 0 -1.4rem;
+        background: var(--nav);
+        backdrop-filter: blur(20px) saturate(180%);
+        -webkit-backdrop-filter: blur(20px) saturate(180%);
+        border-bottom: 1px solid var(--line);
+        scrollbar-width: none;
+      }
+      nav a {
+        flex: none;
+        color: var(--mut);
+        text-decoration: none;
+        font-size: 0.88rem;
+        font-weight: 500;
+        padding: 0.35rem 0.8rem;
+        border-radius: 99px;
+        transition:
+          background 0.2s,
+          color 0.2s;
+      }
+      nav a:hover {
+        background: var(--soft);
+        color: var(--tx);
+      }
+      nav a.on {
+        background: var(--tx);
+        color: var(--bg);
+      }
+      section {
+        padding: 4.5rem 0 1rem;
+        border-top: 1px solid var(--line);
+      }
+      .num {
+        font-size: 0.85rem;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        color: var(--ac);
+        text-transform: uppercase;
+      }
+      h2 {
+        font-size: clamp(2rem, 5.5vw, 3rem);
+        line-height: 1.08;
+        letter-spacing: -0.03em;
+        margin: 0.3rem 0 1.4rem;
+      }
+      h3 {
+        font-size: 1.35rem;
+        letter-spacing: -0.01em;
+        margin: 2.6rem 0 0.4rem;
+      }
+      .txt {
+        max-width: 40em;
+        font-size: 1.06rem;
+      }
+      .txt p {
+        margin: 0.9rem 0;
+      }
+      .eq {
+        margin: 1.4rem 0;
+        padding: 0.4rem 1rem;
+        background: var(--soft);
+        border-radius: 18px;
+        overflow-x: auto;
+      }
+      .katex {
+        font-size: 1.08em;
+      }
+      .katex-display {
+        margin: 0.7em 0;
+      }
+      .tip {
+        max-width: 40em;
+        margin: 1.4rem 0;
+        padding-left: 1.1rem;
+        border-left: 3px solid var(--ac);
+        color: var(--mut);
+      }
+      .tip b {
+        color: var(--tx);
+      }
+      .ex {
+        display: grid;
+        grid-template-columns: 2.6rem 1fr;
+        gap: 0 0.6rem;
+        padding: 1.6rem 0;
+        border-bottom: 1px solid var(--line);
+      }
+      .ex:last-child {
+        border-bottom: 0;
+      }
+      .n {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: var(--line);
+        line-height: 1;
+        letter-spacing: -0.03em;
+        transition: color 0.3s;
+      }
+      .ex.done .n {
+        color: var(--ok);
+      }
+      .q {
+        margin: 0 0 0.9rem;
+        font-size: 1.05rem;
+      }
+      .row {
+        display: flex;
+        gap: 0.7rem;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+      input {
+        width: 9rem;
+        font: inherit;
+        font-size: 1.05rem;
+        padding: 0.4rem 0.1rem;
+        border: 0;
+        border-bottom: 2px solid var(--line);
+        background: transparent;
+        color: var(--tx);
+        border-radius: 0;
+        transition: border-color 0.2s;
+      }
+      input:focus {
+        outline: 0;
+        border-color: var(--ac);
+      }
+      .u {
+        color: var(--mut);
+      }
+      button {
+        font: inherit;
+        font-weight: 600;
+        font-size: 0.95rem;
+        border: 0;
+        border-radius: 99px;
+        padding: 0.5rem 1.15rem;
+        background: var(--ac);
+        color: #fff;
+        cursor: pointer;
+        transition: transform 0.12s ease-out;
+      }
+      button:active {
+        transform: scale(0.95);
+      }
+      .fb {
+        min-height: 1.5rem;
+        margin-top: 0.5rem;
+        font-weight: 600;
+        font-size: 0.95rem;
+      }
+      .fb.ok {
+        color: var(--ok);
+      }
+      .fb.no {
+        color: var(--bad);
+      }
+      details {
+        margin-top: 0.3rem;
+      }
+      summary {
+        cursor: pointer;
+        color: var(--ac);
+        font-size: 0.95rem;
+        font-weight: 500;
+        list-style: none;
+      }
+      summary::-webkit-details-marker {
+        display: none;
+      }
+      summary::before {
+        content: "›";
+        display: inline-block;
+        margin-right: 0.4rem;
+        transition: transform 0.2s;
+      }
+      details[open] summary::before {
+        transform: rotate(90deg);
+      }
+      .sol {
+        margin-top: 0.6rem;
+        padding: 0.7rem 1rem;
+        background: var(--soft);
+        border-radius: 14px;
+        font-size: 0.98rem;
+      }
+      footer {
+        color: var(--mut);
+        font-size: 0.85rem;
+        padding: 3rem 0 0;
+        border-top: 1px solid var(--line);
+        margin-top: 3rem;
+      }
+      @media (min-width: 900px) {
+        .wrap {
+          display: grid;
+          grid-template-columns: 190px 1fr;
+          gap: 0 3rem;
+        }
+        nav {
+          flex-direction: column;
+          align-self: start;
+          top: 1.2rem;
+          margin: 4rem 0 0;
+          padding: 0;
+          background: none;
+          backdrop-filter: none;
+          -webkit-backdrop-filter: none;
+          border: 0;
+          gap: 0.1rem;
+        }
+        nav a {
+          border-radius: 10px;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+        * {
+          transition: none !important;
+        }
+      }
+      @media (prefers-reduced-transparency: reduce) {
+        nav {
+          background: var(--bg);
+          backdrop-filter: none;
+          -webkit-backdrop-filter: none;
+        }
+      }
+      @media print {
+        nav {
+          display: none;
+        }
+        details {
+          display: block;
+        }
+        details > * {
+          display: block;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="hero">
+      <h1>Guía de Física</h1>
+      <p>
+        Vectores, cinemática, energía y torque. Primero la explicación, después
+        la práctica. <span>Deimar Yepes</span>
+      </p>
+      <div class="prog">
+        <span id="pc">0 / 40</span>
+        <div class="bar"><i id="pb"></i></div>
+      </div>
+    </div>
+    <div class="wrap">
+      <nav id="nav"></nav>
+      <main id="app"></main>
+    </div>
+    <script>
+      const r = String.raw;
+      const T = [
+        {
+          id: "componentes",
+          n: "Componentes, ángulo y resultante",
+          intro: [
+            r`Un vector tiene <b>magnitud</b> y <b>dirección</b>. Para trabajar con él lo descomponemos en una parte horizontal $A_x$ y una vertical $A_y$: el vector es la hipotenusa de un triángulo rectángulo y las componentes son sus catetos.`,
+            r`$$A_x=A\cos\theta\qquad A_y=A\sin\theta$$`,
+            r`Al revés, si conoces las componentes, la magnitud sale por Pitágoras y el ángulo con la tangente inversa de $y/x$:`,
+            r`$$A=\sqrt{A_x^2+A_y^2}\qquad \theta=\tan^{-1}\!\left(\frac{A_y}{A_x}\right)$$`,
+            r`<div class="tip"><b>Cuidado con el cuadrante.</b> La calculadora entrega $\theta$ entre $-90^\circ$ y $90^\circ$. Si $A_x\lt0$, suma $180^\circ$ al resultado para obtener el ángulo medido desde $+x$.</div>`,
+          ],
+          ex: [
+            [
+              r`Un vector de $50\,\text{N}$ forma $30^\circ$ con el eje $x$. Calcula $A_x$.`,
+              43.3,
+              "N",
+              r`$A_x=A\cos\theta=50\cos30^\circ=\mathbf{43.30\ N}$`,
+            ],
+            [
+              r`Una velocidad de $20\,\text{m/s}$ apunta $53^\circ$ sobre la horizontal. Calcula $v_y$.`,
+              15.97,
+              "m/s",
+              r`$v_y=20\sin53^\circ=20(0.7986)=\mathbf{15.97\ m/s}$`,
+            ],
+            [
+              r`Un vector tiene $A_x=6$ y $A_y=8$. Calcula su magnitud.`,
+              10,
+              "",
+              r`$A=\sqrt{6^2+8^2}=\sqrt{100}=\mathbf{10}$`,
+            ],
+            [
+              r`Un vector tiene $A_x=-4$ y $A_y=3$. Calcula su ángulo desde $+x$ ($0^\circ$ a $360^\circ$).`,
+              143.13,
+              "°",
+              r`$\tan^{-1}(3/-4)=-36.87^\circ$<br>Como $A_x\lt0$, suma $180^\circ$: $\theta=\mathbf{143.13^\circ}$`,
+            ],
+            [
+              r`Un vector tiene $A_x=5$ y $A_y=-12$. Calcula $\theta=\tan^{-1}(A_y/A_x)$.`,
+              -67.38,
+              "°",
+              r`$\theta=\tan^{-1}(-2.4)=\mathbf{-67.38^\circ}$, equivalente a $292.62^\circ$`,
+            ],
+          ],
+        },
+        {
+          id: "combinacion",
+          n: "Combinación de vectores",
+          intro: [
+            r`Para sumar vectores se suman sus <b>componentes</b> por separado; nunca se suman las magnitudes directamente. Si un vector viene como magnitud y ángulo, primero se descompone.`,
+            r`$$R_x=\sum A_x\qquad R_y=\sum A_y$$`,
+            r`$$R=\sqrt{R_x^2+R_y^2}\qquad \theta_R=\tan^{-1}\!\left(\frac{R_y}{R_x}\right)$$`,
+            r`La resta es la suma del opuesto: $\vec A-\vec B=\vec A+(-\vec B)$, es decir, se resta componente a componente. Lo mismo aplica a combinaciones como $2\vec A-\vec B$.`,
+          ],
+          ex: [
+            [
+              r`$\vec A=(3,4)$ y $\vec B=(1,-2)$. Calcula $|\vec A+\vec B|$.`,
+              4.47,
+              "",
+              r`$\vec R=(4,2)$<br>$|\vec R|=\sqrt{16+4}=\mathbf{4.47}$`,
+            ],
+            [
+              r`$A=10\,\text{N}$ a $0^\circ$ y $B=10\,\text{N}$ a $90^\circ$. Calcula la magnitud de la resultante.`,
+              14.14,
+              "N",
+              r`$\vec R=(10,10)$, $|\vec R|=\sqrt{200}=\mathbf{14.14\ N}$`,
+            ],
+            [
+              r`$A=8\,\text{N}$ a $0^\circ$ y $B=6\,\text{N}$ a $90^\circ$. Calcula el ángulo de la resultante.`,
+              36.87,
+              "°",
+              r`$\vec R=(8,6)$, $\theta=\tan^{-1}(6/8)=\mathbf{36.87^\circ}$`,
+            ],
+            [
+              r`$\vec A=(5,2)$ y $\vec B=(2,6)$. Calcula $|\vec A-\vec B|$.`,
+              5,
+              "",
+              r`$\vec D=(3,-4)$, $|\vec D|=\sqrt{9+16}=\mathbf{5}$`,
+            ],
+            [
+              r`$\vec A=(2,3)$, $\vec B=(-1,4)$ y $\vec C=(5,-2)$. Calcula $|\vec A+\vec B+\vec C|$.`,
+              7.81,
+              "",
+              r`$R_x=6,\ R_y=5$<br>$|\vec R|=\sqrt{61}=\mathbf{7.81}$`,
+            ],
+          ],
+        },
+        {
+          id: "mru",
+          n: "Movimiento rectilíneo uniforme (MRU)",
+          intro: [
+            r`En el MRU el cuerpo se mueve en línea recta con <b>velocidad constante</b>: la aceleración es cero y recorre distancias iguales en tiempos iguales.`,
+            r`$$x=x_0+vt\qquad v=\frac{d}{t}$$`,
+            r`<div class="tip"><b>Conversión útil:</b> $\text{km/h}\div3.6=\text{m/s}$. En problemas de encuentro, iguala las posiciones $x_A=x_B$ o usa la velocidad relativa (se suman si van de frente, se restan si van en el mismo sentido).</div>`,
+          ],
+          ex: [
+            [
+              r`Un auto va a $72\,\text{km/h}$ constantes. ¿Cuántos metros recorre en $30\,\text{s}$?`,
+              600,
+              "m",
+              r`$72/3.6=20\ \text{m/s}$<br>$d=vt=20(30)=\mathbf{600\ m}$`,
+            ],
+            [
+              r`Un ciclista recorre $450\,\text{m}$ a $15\,\text{m/s}$. ¿Cuánto tarda?`,
+              30,
+              "s",
+              r`$t=d/v=450/15=\mathbf{30\ s}$`,
+            ],
+            [
+              r`Dos autos a $300\,\text{m}$ se acercan de frente a $20$ y $30\,\text{m/s}$. ¿Cuánto tardan en cruzarse?`,
+              6,
+              "s",
+              r`$v_{rel}=20+30=50\ \text{m/s}$<br>$t=300/50=\mathbf{6\ s}$`,
+            ],
+            [
+              r`A sale de $x=0$ a $25\,\text{m/s}$; B sale $100\,\text{m}$ adelante, en el mismo sentido, a $15\,\text{m/s}$. ¿Cuándo lo alcanza A?`,
+              10,
+              "s",
+              r`$25t=100+15t\Rightarrow10t=100\Rightarrow t=\mathbf{10\ s}$`,
+            ],
+            [
+              r`Una partícula cumple $x=5+4t$ (m, s). ¿Dónde está en $t=8\,\text{s}$?`,
+              37,
+              "m",
+              r`$x=5+4(8)=\mathbf{37\ m}$`,
+            ],
+          ],
+        },
+        {
+          id: "mrua",
+          n: "Movimiento rectilíneo uniformemente acelerado (MRUA)",
+          intro: [
+            r`Aquí la <b>aceleración es constante</b>, así que la velocidad cambia de forma lineal con el tiempo. Hay tres ecuaciones y la clave es elegir la que contiene tu incógnita y no pide datos que no tienes.`,
+            r`$$v=v_0+at$$`,
+            r`$$d=v_0t+\tfrac12at^2$$`,
+            r`$$v^2=v_0^2+2ad$$`,
+            r`<div class="tip"><b>Sin tiempo en el enunciado:</b> usa la tercera. Si el cuerpo frena, $a\lt0$; si parte del reposo, $v_0=0$; si se detiene, $v=0$.</div>`,
+          ],
+          ex: [
+            [
+              r`Un carro parte del reposo con $a=3\,\text{m/s}^2$. ¿Qué velocidad tiene a los $8\,\text{s}$?`,
+              24,
+              "m/s",
+              r`$v=0+3(8)=\mathbf{24\ m/s}$`,
+            ],
+            [
+              r`Con $v_0=10\,\text{m/s}$ y $a=2\,\text{m/s}^2$ durante $5\,\text{s}$, ¿qué distancia recorre?`,
+              75,
+              "m",
+              r`$d=10(5)+\tfrac12(2)(5)^2=50+25=\mathbf{75\ m}$`,
+            ],
+            [
+              r`Un auto a $20\,\text{m/s}$ frena con $a=-4\,\text{m/s}^2$ hasta detenerse. ¿Qué distancia recorre?`,
+              50,
+              "m",
+              r`$0=20^2+2(-4)d\Rightarrow d=400/8=\mathbf{50\ m}$`,
+            ],
+            [
+              r`Un móvil pasa de $5$ a $25\,\text{m/s}$ en $60\,\text{m}$. ¿Cuál es su aceleración?`,
+              5,
+              "m/s²",
+              r`$a=\dfrac{25^2-5^2}{2(60)}=\dfrac{600}{120}=\mathbf{5\ m/s^2}$`,
+            ],
+            [
+              r`Desde el reposo con $a=2\,\text{m/s}^2$, ¿qué velocidad tiene tras $100\,\text{m}$?`,
+              20,
+              "m/s",
+              r`$v^2=2(2)(100)=400\Rightarrow v=\mathbf{20\ m/s}$`,
+            ],
+          ],
+        },
+        {
+          id: "caida",
+          n: "Caída libre",
+          intro: [
+            r`Es un MRUA donde la única aceleración es la gravedad, $g=9.8\,\text{m/s}^2$ hacia abajo (sin resistencia del aire). No depende de la masa: una piedra y una pluma caerían igual en el vacío.`,
+            r`$$v=v_0+gt\qquad h=v_0t+\tfrac12gt^2$$`,
+            r`Si lanzas un objeto hacia arriba, en el punto más alto $v=0$. De ahí salen la altura máxima y el tiempo total de vuelo (sube y baja en tiempos iguales):`,
+            r`$$h_{\max}=\frac{v_0^2}{2g}\qquad t_{\text{vuelo}}=\frac{2v_0}{g}$$`,
+          ],
+          ex: [
+            [
+              r`Se suelta una piedra desde $45\,\text{m}$. ¿Cuánto tarda en llegar al suelo?`,
+              3.03,
+              "s",
+              r`$t=\sqrt{\dfrac{2h}{g}}=\sqrt{\dfrac{90}{9.8}}=\mathbf{3.03\ s}$`,
+            ],
+            [
+              r`Un objeto se suelta y cae durante $4\,\text{s}$. ¿Qué velocidad alcanza?`,
+              39.2,
+              "m/s",
+              r`$v=gt=9.8(4)=\mathbf{39.2\ m/s}$`,
+            ],
+            [
+              r`Se lanza una bola hacia arriba a $19.6\,\text{m/s}$. ¿Cuál es la altura máxima?`,
+              19.6,
+              "m",
+              r`$h=\dfrac{v_0^2}{2g}=\dfrac{19.6^2}{19.6}=\mathbf{19.6\ m}$`,
+            ],
+            [
+              r`Con ese mismo lanzamiento, ¿cuánto dura en el aire hasta volver al punto de partida?`,
+              4,
+              "s",
+              r`$t=\dfrac{2v_0}{g}=\dfrac{2(19.6)}{9.8}=\mathbf{4\ s}$`,
+            ],
+            [
+              r`Se lanza hacia abajo a $5\,\text{m/s}$ desde $30\,\text{m}$. ¿Con qué velocidad llega al suelo?`,
+              24.76,
+              "m/s",
+              r`$v=\sqrt{v_0^2+2gh}=\sqrt{25+588}=\sqrt{613}=\mathbf{24.76\ m/s}$`,
+            ],
+          ],
+        },
+        {
+          id: "cinetica",
+          n: "Energía cinética",
+          intro: [
+            r`Es la energía que tiene un cuerpo por estar en movimiento. Depende de la masa y, sobre todo, del <b>cuadrado</b> de la velocidad: duplicar la rapidez cuadruplica la energía.`,
+            r`$$E_c=\tfrac12mv^2$$`,
+            r`El teorema trabajo-energía dice que el trabajo neto sobre un cuerpo es igual al cambio de su energía cinética:`,
+            r`$$W_{\text{neto}}=\Delta E_c=\tfrac12mv_f^2-\tfrac12mv_i^2$$`,
+            r`La unidad es el joule: $1\,\text{J}=1\,\text{kg}\cdot\text{m}^2/\text{s}^2$.`,
+          ],
+          ex: [
+            [
+              r`Calcula $E_c$ de una masa de $2\,\text{kg}$ a $10\,\text{m/s}$.`,
+              100,
+              "J",
+              r`$E_c=\tfrac12(2)(10)^2=\mathbf{100\ J}$`,
+            ],
+            [
+              r`Un auto de $1200\,\text{kg}$ va a $72\,\text{km/h}$. ¿Cuál es su $E_c$?`,
+              240000,
+              "J",
+              r`$72\ \text{km/h}=20\ \text{m/s}$<br>$E_c=\tfrac12(1200)(20)^2=\mathbf{240\,000\ J}$`,
+            ],
+            [
+              r`Un objeto de $4\,\text{kg}$ tiene $E_c=500\,\text{J}$. ¿Cuál es su velocidad?`,
+              15.81,
+              "m/s",
+              r`$v=\sqrt{\dfrac{2E_c}{m}}=\sqrt{250}=\mathbf{15.81\ m/s}$`,
+            ],
+            [
+              r`Un cuerpo tiene $E_c=50\,\text{J}$. Si duplica su velocidad, ¿cuál es su nueva $E_c$?`,
+              200,
+              "J",
+              r`$E_c\propto v^2\Rightarrow 50(2^2)=\mathbf{200\ J}$`,
+            ],
+            [
+              r`Un objeto de $3\,\text{kg}$ pasa de $2$ a $8\,\text{m/s}$. ¿Qué trabajo neto se hizo sobre él?`,
+              90,
+              "J",
+              r`$W=\tfrac12(3)(8^2-2^2)=1.5(60)=\mathbf{90\ J}$`,
+            ],
+          ],
+        },
+        {
+          id: "potencial",
+          n: "Energía potencial",
+          intro: [
+            r`Es la energía almacenada por la <b>posición</b> o la configuración de un sistema. Dos casos habituales: gravitatoria (altura) y elástica (resorte comprimido o estirado).`,
+            r`$$E_p=mgh\qquad U_e=\tfrac12kx^2$$`,
+            r`Sin fricción, la energía mecánica se conserva: lo que se pierde en potencial se gana en cinética.`,
+            r`$$E_p+E_c=\text{constante}\ \Rightarrow\ mgh=\tfrac12mv^2\ \Rightarrow\ v=\sqrt{2gh}$$`,
+            r`<div class="tip"><b>Observa:</b> en la conservación la masa se cancela, por eso la rapidez al caer o al bajar una rampa sin fricción solo depende de la altura.</div>`,
+          ],
+          ex: [
+            [
+              r`Un bloque de $5\,\text{kg}$ está a $10\,\text{m}$ de altura. Calcula $E_p$.`,
+              490,
+              "J",
+              r`$E_p=mgh=5(9.8)(10)=\mathbf{490\ J}$`,
+            ],
+            [
+              r`Un objeto de $2\,\text{kg}$ cae desde $20\,\text{m}$. ¿Con qué rapidez llega al suelo? (sin fricción)`,
+              19.8,
+              "m/s",
+              r`$v=\sqrt{2gh}=\sqrt{392}=\mathbf{19.80\ m/s}$`,
+            ],
+            [
+              r`Un resorte con $k=200\,\text{N/m}$ se comprime $0.3\,\text{m}$. ¿Cuánta energía almacena?`,
+              9,
+              "J",
+              r`$U_e=\tfrac12(200)(0.3)^2=\mathbf{9\ J}$`,
+            ],
+            [
+              r`Se sube una masa de $0.5\,\text{kg}$ de $3\,\text{m}$ a $8\,\text{m}$. ¿Cuánto aumenta su $E_p$?`,
+              24.5,
+              "J",
+              r`$\Delta E_p=0.5(9.8)(5)=\mathbf{24.5\ J}$`,
+            ],
+            [
+              r`Un bloque parte del reposo a $5\,\text{m}$ de altura en una rampa sin fricción. ¿Qué velocidad tiene abajo?`,
+              9.9,
+              "m/s",
+              r`$v=\sqrt{2(9.8)(5)}=\sqrt{98}=\mathbf{9.90\ m/s}$`,
+            ],
+          ],
+        },
+        {
+          id: "torque",
+          n: "Torque",
+          intro: [
+            r`El torque mide qué tanto una fuerza hace <b>girar</b> un cuerpo alrededor de un eje. Depende de la fuerza, de la distancia $r$ al eje y del ángulo $\theta$ entre $\vec r$ y $\vec F$.`,
+            r`$$\tau=rF\sin\theta$$`,
+            r`Si la fuerza es perpendicular al brazo, $\sin\theta=1$ y queda $\tau=rF$. La unidad es el $\text{N}\cdot\text{m}$.`,
+            r`Un cuerpo está en equilibrio rotacional cuando los torques se cancelan. Se toma el giro antihorario como positivo y el horario como negativo:`,
+            r`$$\sum\tau=0$$`,
+          ],
+          ex: [
+            [
+              r`Una fuerza de $20\,\text{N}$ perpendicular a una llave, a $0.5\,\text{m}$ del eje. Calcula el torque.`,
+              10,
+              "N·m",
+              r`$\tau=rF=0.5(20)=\mathbf{10\ N\cdot m}$`,
+            ],
+            [
+              r`Una fuerza de $40\,\text{N}$ actúa a $0.3\,\text{m}$ del eje, formando $30^\circ$ con el brazo. Calcula el torque.`,
+              6,
+              "N·m",
+              r`$\tau=0.3(40)\sin30^\circ=\mathbf{6\ N\cdot m}$`,
+            ],
+            [
+              r`Para aflojar una tuerca se necesitan $60\,\text{N}\cdot\text{m}$ con una llave de $0.4\,\text{m}$. ¿Qué fuerza perpendicular hace falta?`,
+              150,
+              "N",
+              r`$F=\tau/r=60/0.4=\mathbf{150\ N}$`,
+            ],
+            [
+              r`Balancín en equilibrio: $400\,\text{N}$ a $2\,\text{m}$ a la izquierda. ¿Qué fuerza hay a $4\,\text{m}$ a la derecha?`,
+              200,
+              "N",
+              r`$400(2)=F(4)\Rightarrow F=\mathbf{200\ N}$`,
+            ],
+            [
+              r`Sobre un disco actúan $10\,\text{N}$ a $2\,\text{m}$ (antihorario) y $6\,\text{N}$ a $3\,\text{m}$ (horario). ¿Cuál es el torque neto?`,
+              2,
+              "N·m",
+              r`$\tau=10(2)-6(3)=\mathbf{2\ N\cdot m}$`,
+            ],
+          ],
+        },
+      ];
+      const app = document.getElementById("app"),
+        nav = document.getElementById("nav");
+      let done = 0,
+        total = 0;
+      T.forEach((t, i) => {
+        nav.insertAdjacentHTML(
+          "beforeend",
+          `<a href="#${t.id}">${i + 1}. ${t.n.split(" (")[0]}</a>`,
+        );
+        let h =
+          `<section id="${t.id}"><div class="num">Tema ${i + 1}</div><h2>${t.n}</h2><div class="txt">` +
+          t.intro
+            .map((x) =>
+              x.startsWith("$$")
+                ? `<div class="eq">${x}</div>`
+                : x.startsWith("<div")
+                  ? x
+                  : `<p>${x}</p>`,
+            )
+            .join("") +
+          `</div><h3>Ejercicios</h3>`;
+        t.ex.forEach((e, j) => {
+          total++;
+          h += `<div class="ex" data-a="${e[1]}"><div class="n">${j + 1}</div><div><p class="q">${e[0]}</p><div class="row"><input inputmode="decimal" placeholder="Respuesta" aria-label="Respuesta"><span class="u">${e[2]}</span><button type="button">Comprobar</button></div><div class="fb" aria-live="polite"></div><details><summary>Ver solución paso a paso</summary><div class="sol">${e[3]}</div></details></div></div>`;
+        });
+        app.insertAdjacentHTML("beforeend", h + "</section>");
+      });
+      app.insertAdjacentHTML(
+        "beforeend",
+        `<footer>Se usa $g=9.8\\,\\text{m/s}^2$. Margen de error aceptado: ±1.5 %. Ángulos en grados.</footer>`,
+      );
+      document.getElementById("pc").textContent = "0 / " + total;
+      function check(c) {
+        const inp = c.querySelector("input"),
+          fb = c.querySelector(".fb"),
+          a = parseFloat(c.dataset.a),
+          v = parseFloat(inp.value.replace(",", "."));
+        if (isNaN(v)) {
+          fb.className = "fb no";
+          fb.textContent = "Escribe un número.";
+          return;
+        }
+        if (Math.abs(v - a) <= Math.max(Math.abs(a) * 0.015, 0.02)) {
+          fb.className = "fb ok";
+          fb.textContent = "✓ Correcto";
+          if (!c.classList.contains("done")) {
+            c.classList.add("done");
+            done++;
+            document.getElementById("pc").textContent = done + " / " + total;
+            document.getElementById("pb").style.width =
+              (done / total) * 100 + "%";
+          }
+        } else {
+          fb.className = "fb no";
+          fb.textContent =
+            "Aún no. Revisa la solución paso a paso e inténtalo de nuevo.";
+        }
+      }
+      app.addEventListener("click", (e) => {
+        if (e.target.tagName === "BUTTON") check(e.target.closest(".ex"));
+      });
+      app.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" && e.target.tagName === "INPUT")
+          check(e.target.closest(".ex"));
+      });
+      if (window.renderMathInElement)
+        renderMathInElement(document.body, {
+          throwOnError: false,
+          delimiters: [
+            { left: "$$", right: "$$", display: true },
+            { left: "$", right: "$", display: false },
+          ],
+        });
+      const links = [...nav.querySelectorAll("a")],
+        secs = T.map((t) => document.getElementById(t.id));
+      new IntersectionObserver(
+        (es) =>
+          es.forEach((en) => {
+            if (en.isIntersecting) {
+              links.forEach((l) =>
+                l.classList.toggle("on", l.hash === "#" + en.target.id),
+              );
+            }
+          }),
+        { rootMargin: "-30% 0px -60% 0px" },
+      ).observe && secs.forEach((s) => {});
+      const io = new IntersectionObserver(
+        (es) =>
+          es.forEach((en) => {
+            if (en.isIntersecting)
+              links.forEach((l) =>
+                l.classList.toggle("on", l.hash === "#" + en.target.id),
+              );
+          }),
+        { rootMargin: "-30% 0px -60% 0px" },
+      );
+      secs.forEach((s) => io.observe(s));
+    </script>
+  </body>
+</html>
